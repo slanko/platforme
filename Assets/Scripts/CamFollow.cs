@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
-    public GameObject followTarget;
-    public float lerpSpeed;
+    public GameObject followTarget, myCam;
+    public float lerpSpeed, camSensitivity;
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * camSensitivity );
+        myCam.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), 0, 0) * -camSensitivity);
+        myCam.transform.Translate(new Vector3(0, Input.GetAxis("Mouse Y") * -0.1f));
+
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(new Vector3(0, -3, 0));

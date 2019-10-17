@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -8,10 +9,10 @@ public class playerScript : MonoBehaviour
     Animator anim;
     Rigidbody rb;
     public KeyCode forward, backward, left, right, jump;
-    public float wantedSpeed, currentSpeed;
+    public float wantedSpeed, currentSpeed, jumpForce;
     public Quaternion wantedDirection, camDirection;
     public Vector3 debugEulerAngles;
-    public float accel, decel, camSpeed;
+    public float camSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +20,23 @@ public class playerScript : MonoBehaviour
         wantedDirection = transform.rotation;
         rb = GetComponent<Rigidbody>();
         anim = GameObject.Find(transform.name + "/dipshitrigged").GetComponent<Animator>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if (Input.GetKeyDown(jump))
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+
         if (Input.GetKey(forward))
         {
             wantedDirection = Quaternion.Euler(0, 0, 0);
