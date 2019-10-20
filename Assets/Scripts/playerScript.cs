@@ -5,18 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
-    public GameObject cameraObject, cameraSorter;
     Animator anim;
     Rigidbody rb;
-    public KeyCode forward, backward, left, right, jump;
-    public float wantedSpeed, currentSpeed, jumpForce;
-    public Quaternion wantedDirection, camDirection;
-    public Vector3 debugEulerAngles;
+    CapsuleCollider cap;
+    public GameObject cameraObject, cameraSorter;
     public float camSpeed;
+    public KeyCode forward, backward, left, right, jump, crouch;
+    public float jumpForce;
+    float movementSpeed;
+    public float runSpeed, crouchSpeed;
+    Quaternion wantedDirection, camDirection;
+    Vector3 debugEulerAngles;
+    [Header("Wall jump force values")]
+    public float wallJumpForce;
+    public float wallJumpUpForce;
+    Vector3 resetPos;
+    checkpointScript check;
 
     // Start is called before the first frame update
     void Start()
     {
+        cap = GetComponent<CapsuleCollider>();
         wantedDirection = transform.rotation;
         rb = GetComponent<Rigidbody>();
         anim = GameObject.Find(transform.name + "/dipshitrigged").GetComponent<Animator>();
@@ -29,9 +38,22 @@ public class playerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Resetto();
         }
-
+        if (Input.GetKey(crouch))
+        {
+            anim.SetBool("crouching", true);
+            movementSpeed = crouchSpeed;
+            cap.height = 0.7733587f;
+            cap.center = new Vector3(0, -0.6126326f, 0);
+        }
+        else
+        {
+            anim.SetBool("crouching", false);
+            movementSpeed = runSpeed;
+            cap.height = 1.619178f;
+            cap.center = new Vector3(0, -0.1904109f, 0);
+        }
         if (Input.GetKey(forward))
         {
             wantedDirection = Quaternion.Euler(0, 0, 0);
@@ -66,12 +88,13 @@ public class playerScript : MonoBehaviour
         }
         if (Input.GetKey(forward) == false && Input.GetKey(backward) == false && Input.GetKey(left) == false && Input.GetKey(right) == false)
         {
-        //decelerate
+            anim.SetBool("running", false);
         }
         else
         {
             wantedDirection = Quaternion.Euler(0, wantedDirection.eulerAngles.y + cameraObject.transform.rotation.eulerAngles.y, 0);
-            transform.Translate(Vector3.forward * .1f);
+            transform.Translate(Vector3.forward * movementSpeed * 0.1f);
+            anim.SetBool("running", true);
         }
         //camDirection = Quaternion.Euler(cameraObject.transform.rotation);
 
@@ -87,8 +110,32 @@ public class playerScript : MonoBehaviour
             if (Input.GetKeyDown(jump))
             {
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                anim.SetTrigger("jump");
             }
+            anim.SetBool("inAir", false);
         }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(other.gameObject.tag == "Ground")
+        {
+            anim.SetBool("inAir", true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Checkpoint")
+        {
+            check = other.GetComponent<checkpointScript>();
+            resetPos = check.playerPos.transform.position;
+        }
+    }
+
+    void Resetto()
+    {
+        transform.position = resetPos;
     }
 }
 
