@@ -32,11 +32,6 @@ public class playerScript : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        if (Input.GetKeyDown(jump))
-        {
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        }
-
         if (Input.GetKey(forward))
         {
             wantedDirection = Quaternion.Euler(0, 0, 0);
@@ -83,6 +78,17 @@ public class playerScript : MonoBehaviour
         transform.rotation = (Quaternion.Slerp(transform.rotation, wantedDirection, Time.deltaTime * camSpeed));
 
         debugEulerAngles = wantedDirection.eulerAngles;
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if(other.gameObject.tag == "Ground")
+        {
+            if (Input.GetKeyDown(jump))
+            {
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            }
+        }
     }
 }
 
