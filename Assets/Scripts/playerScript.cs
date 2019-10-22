@@ -28,7 +28,7 @@ public class playerScript : MonoBehaviour
         cap = GetComponent<CapsuleCollider>();
         wantedDirection = transform.rotation;
         rb = GetComponent<Rigidbody>();
-        anim = GameObject.Find(transform.name + "/dipshitrigged").GetComponent<Animator>();
+        anim = GameObject.Find(transform.name + "/rabbitrigged").GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
