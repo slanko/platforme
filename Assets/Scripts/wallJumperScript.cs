@@ -18,7 +18,7 @@ public class wallJumperScript : MonoBehaviour
     {
         rb = parentObject.GetComponent<Rigidbody>();
         pS = parentObject.GetComponent<playerScript>();
-        anim = GameObject.Find(parentObject.transform.name + "/dipshitrigged").GetComponent<Animator>();
+        anim = GameObject.Find(parentObject.transform.name + "/rabbitrigged").GetComponent<Animator>();
     }
 
     private void OnTriggerStay(Collider other)

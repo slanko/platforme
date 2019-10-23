@@ -21,6 +21,7 @@ public class playerScript : MonoBehaviour
     public float wallJumpUpForce;
     Vector3 resetPos;
     checkpointScript check;
+    bool jumpCheck = true;
 
     // Start is called before the first frame update
     void Start()
@@ -109,8 +110,12 @@ public class playerScript : MonoBehaviour
         {
             if (Input.GetKeyDown(jump))
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-                anim.SetTrigger("jump");
+                if(jumpCheck == true)
+                {
+                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                    anim.SetTrigger("jump");
+                    jumpCheck = false;
+                }
             }
             anim.SetBool("inAir", false);
         }
@@ -121,6 +126,7 @@ public class playerScript : MonoBehaviour
         if(other.gameObject.tag == "Ground")
         {
             anim.SetBool("inAir", true);
+            jumpCheck = true;
         }
     }
 
