@@ -27,22 +27,24 @@ public class wallJumperScript : MonoBehaviour
         {
             if(jumped == false)
             {
-                if (Input.GetKeyDown(pS.jump))
+                if(pS.grounded == false)
                 {
-                    if (leftOrRight == true)
+                    if (Input.GetKeyDown(pS.jump))
                     {
-                        rb.AddForce(parentObject.transform.right * pS.wallJumpForce, ForceMode.VelocityChange);
+                        if (leftOrRight == true)
+                        {
+                            rb.AddForce(parentObject.transform.right * pS.wallJumpForce, ForceMode.VelocityChange);
+                        }
+                        else
+                        {
+                            rb.AddForce((parentObject.transform.right * -1) * pS.wallJumpForce, ForceMode.VelocityChange);
+                        }
+                        rb.AddForce(Vector3.up * pS.wallJumpUpForce, ForceMode.Impulse);
+                        anim.SetTrigger("jump");
+                        jumped = true;
                     }
-                    else
-                    {
-                        rb.AddForce((parentObject.transform.right * -1) * pS.wallJumpForce, ForceMode.VelocityChange);
-                    }
-                    rb.AddForce(Vector3.up * pS.wallJumpUpForce, ForceMode.Impulse);
-                    anim.SetTrigger("jump");
-                    jumped = true;
                 }
             }
-
         }
     }
 

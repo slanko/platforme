@@ -8,6 +8,9 @@ TagManager:
   - Wall
   - Checkpoint
   - PlayerLight
+  - Hazard
+  - Resetter
+  - FinishLine
   layers:
   - Default
   - TransparentFX

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -19,9 +20,17 @@ public class playerScript : MonoBehaviour
     [Header("Wall jump force values")]
     public float wallJumpForce;
     public float wallJumpUpForce;
-    Vector3 resetPos;
+    Vector3 resetPos = new Vector3(0, 1, 0);
     checkpointScript check;
     bool jumpCheck = true;
+    public bool grounded;
+    [Header("Death Ragdoll")]
+    public GameObject ragdoll;
+
+    //TIME STUFF
+    public float timer;
+    public Text timeDisplay;
+    bool finished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,14 +41,32 @@ public class playerScript : MonoBehaviour
         anim = GameObject.Find(transform.name + "/rabbitrigged").GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        timer = 0;
+        finished = false;
     }
+
+    private void Update()
+    {
+        if(finished == false)
+        {
+            timer = timer + Time.deltaTime;
+            timeDisplay.text = "time: " + timer.ToString("F2");
+        }
+
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Resetto();
+        }
+        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         if (Input.GetKey(crouch))
         {
@@ -108,6 +135,7 @@ public class playerScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Ground")
         {
+            grounded = true;
             if (Input.GetKeyDown(jump))
             {
                 if(jumpCheck == true)
@@ -127,6 +155,20 @@ public class playerScript : MonoBehaviour
         {
             anim.SetBool("inAir", true);
             jumpCheck = true;
+            grounded = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Hazard")
+        {
+            Instantiate(ragdoll, transform.position, transform.rotation);
+            Resetto();
+        }
+        if(other.gameObject.tag == "Resetter")
+        {
+            Resetto();
         }
     }
 
@@ -136,6 +178,10 @@ public class playerScript : MonoBehaviour
         {
             check = other.GetComponent<checkpointScript>();
             resetPos = check.playerPos.transform.position;
+        }
+        if(other.gameObject.tag == "FinishLine")
+        {
+            finished = true;
         }
     }
 
