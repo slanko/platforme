@@ -11,7 +11,7 @@ public class playerScript : MonoBehaviour
     CapsuleCollider cap;
     public GameObject cameraObject, cameraSorter;
     public float camSpeed;
-    public KeyCode forward, backward, left, right, jump, crouch;
+    public KeyCode forward, backward, left, right, jump, crouch, altCrouch;
     public float jumpForce;
     float movementSpeed;
     public float runSpeed, crouchSpeed;
@@ -26,6 +26,8 @@ public class playerScript : MonoBehaviour
     public bool grounded;
     [Header("Death Ragdoll")]
     public GameObject ragdoll;
+    public bool movementSmooth;
+    public bool leaveCorpses;
 
     //TIME STUFF
     public float timer;
@@ -64,23 +66,30 @@ public class playerScript : MonoBehaviour
         {
             Resetto();
         }
-        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        if (Input.GetKey(crouch))
+        if (Input.GetKey(crouch) || Input.GetKey(altCrouch))
         {
-            anim.SetBool("crouching", true);
-            movementSpeed = crouchSpeed;
-            cap.height = 0.7733587f;
-            cap.center = new Vector3(0, -0.6126326f, 0);
+            if(grounded == true)
+            {
+                anim.SetBool("crouching", true);
+                movementSpeed = crouchSpeed;
+                cap.height = 0.7733587f;
+                cap.center = new Vector3(0, -0.6126326f, 0);
+            }
         }
         else
         {
-            anim.SetBool("crouching", false);
-            movementSpeed = runSpeed;
-            cap.height = 1.619178f;
-            cap.center = new Vector3(0, -0.1904109f, 0);
+            if (grounded == true)
+            {
+                anim.SetBool("crouching", false);
+                movementSpeed = runSpeed;
+                cap.height = 1.619178f;
+                cap.center = new Vector3(0, -0.1904109f, 0);
+            }
+
         }
         if (Input.GetKey(forward))
         {
@@ -125,8 +134,21 @@ public class playerScript : MonoBehaviour
             anim.SetBool("running", true);
         }
         //camDirection = Quaternion.Euler(cameraObject.transform.rotation);
-
-        transform.rotation = (Quaternion.Slerp(transform.rotation, wantedDirection, Time.deltaTime * camSpeed));
+        if(movementSmooth == false)
+        {
+            if (grounded == true)
+            {
+                transform.rotation = wantedDirection;
+            }
+            else
+            {
+                transform.rotation = (Quaternion.Slerp(transform.rotation, wantedDirection, Time.deltaTime * camSpeed));
+            }
+        }
+        else
+        {
+            transform.rotation = (Quaternion.Slerp(transform.rotation, wantedDirection, Time.deltaTime * camSpeed));
+        }
 
         debugEulerAngles = wantedDirection.eulerAngles;
     }
@@ -163,7 +185,10 @@ public class playerScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Hazard")
         {
-            Instantiate(ragdoll, transform.position, transform.rotation);
+            if(leaveCorpses == true)
+            {
+                Instantiate(ragdoll, transform.position, transform.rotation);
+            }
             Resetto();
         }
         if(other.gameObject.tag == "Resetter")
