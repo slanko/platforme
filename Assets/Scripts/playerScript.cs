@@ -15,6 +15,7 @@ public class playerScript : MonoBehaviour
     public float jumpForce;
     float movementSpeed;
     public float runSpeed, crouchSpeed;
+    public bool isCrouching = false;
     Quaternion wantedDirection, camDirection;
     Vector3 debugEulerAngles;
     [Header("Wall jump force values")]
@@ -78,6 +79,7 @@ public class playerScript : MonoBehaviour
                 movementSpeed = crouchSpeed;
                 cap.height = 0.7733587f;
                 cap.center = new Vector3(0, -0.6126326f, 0);
+                isCrouching = true;
             }
         }
         else
@@ -88,6 +90,7 @@ public class playerScript : MonoBehaviour
                 movementSpeed = runSpeed;
                 cap.height = 1.619178f;
                 cap.center = new Vector3(0, -0.1904109f, 0);
+                isCrouching = false;
             }
 
         }

@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class trapScript : MonoBehaviour
 {
+    playerScript pS;
     Animator anim;
+    bool sprung = false;
     
     void Start()
     {
         anim = GetComponent<Animator>();
+        pS = GameObject.Find("Player").GetComponent<playerScript>();
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            anim.SetTrigger("Spring");
+            if (pS.isCrouching == false)
+            {
+                if (sprung == false)
+                {
+                    anim.SetTrigger("Spring");
+                    sprung = true;
+                }
+            }
         }
+    }
+
+    public void resetSpring()
+    {
+        sprung = false;
     }
 }
