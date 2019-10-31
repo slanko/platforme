@@ -42,6 +42,7 @@ public class UIscript : MonoBehaviour
                 if (invAnim.GetBool("InventoryMenu") == false)
                 {
                     invAnim.SetBool("InventoryMenu", true);
+                Invoke("resetInv", 5);
                 }
                 else
                 {
@@ -70,6 +71,23 @@ public class UIscript : MonoBehaviour
         else
         {
             pS.movementSmooth = true;
+        }
+    }
+
+    void resetInv()
+    {
+        if (invAnim.GetBool("InventoryMenu") == true)
+        {
+            invAnim.SetBool("InventoryMenu", false);
+        }
+    }
+
+    public void showInv()
+    {
+        if (invAnim.GetBool("InventoryMenu") == false)
+        {
+            invAnim.SetBool("InventoryMenu", true);
+            Invoke("resetInv", 5);
         }
     }
 }

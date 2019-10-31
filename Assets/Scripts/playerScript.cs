@@ -11,7 +11,7 @@ public class playerScript : MonoBehaviour
     CapsuleCollider cap;
     public GameObject cameraObject, cameraSorter;
     public float camSpeed;
-    public KeyCode forward, backward, left, right, jump, crouch, altCrouch;
+    public KeyCode forward, backward, left, right, jump, crouch, altCrouch, interact;
     public float jumpForce;
     float movementSpeed;
     public float runSpeed, crouchSpeed;
@@ -29,6 +29,10 @@ public class playerScript : MonoBehaviour
     public GameObject ragdoll;
     public bool movementSmooth;
     public bool leaveCorpses;
+    [Header("Inventory Booleans")]
+    public bool hasCog;
+    public bool hasCrystal, hasLever, hasKey1, hasKey2, hasKey3, hasCandle;
+    invScript currentItem;
 
     //TIME STUFF
     public float timer;
@@ -210,6 +214,20 @@ public class playerScript : MonoBehaviour
         if(other.gameObject.tag == "FinishLine")
         {
             finished = true;
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+            if (Input.GetKeyDown(interact))
+            {
+                currentItem = other.GetComponent<invScript>();
+                currentItem.switchSprite();
+                Destroy(other.gameObject);
+            }
         }
     }
 

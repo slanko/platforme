@@ -11,6 +11,7 @@ TagManager:
   - Hazard
   - Resetter
   - FinishLine
+  - Item
   layers:
   - Default
   - TransparentFX
