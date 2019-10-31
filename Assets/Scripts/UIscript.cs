@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class UIscript : MonoBehaviour
 {
-    public GameObject optionsMenu;
-    Animator optionsAnim;
-    public KeyCode options;
+    public GameObject optionsMenu, invMenu;
+    Animator optionsAnim, invAnim;
+    public KeyCode options, inventory;
     Toggle moveToggle, corpseToggle;
 
     playerScript pS;
@@ -15,6 +15,7 @@ public class UIscript : MonoBehaviour
     void Start()
     {
         optionsAnim = optionsMenu.GetComponent<Animator>();
+        invAnim = invMenu.GetComponent<Animator>();
         pS = GameObject.Find("Player").GetComponent<playerScript>();
     }
 
@@ -23,18 +24,29 @@ public class UIscript : MonoBehaviour
     {
         if (Input.GetKeyDown(options))
         {
-            if(optionsAnim.GetBool("optionsMenu") == false)
-            {
-                optionsAnim.SetBool("optionsMenu", true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                optionsAnim.SetBool("optionsMenu", false);
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+                if (optionsAnim.GetBool("optionsMenu") == false)
+                {
+                    optionsAnim.SetBool("optionsMenu", true);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    optionsAnim.SetBool("optionsMenu", false);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+        }
+        if (Input.GetKeyDown(inventory))
+        {
+                if (invAnim.GetBool("InventoryMenu") == false)
+                {
+                    invAnim.SetBool("InventoryMenu", true);
+                }
+                else
+                {
+                    invAnim.SetBool("InventoryMenu", false);
+                }
         }
     }
     public void toggleCorpses()
