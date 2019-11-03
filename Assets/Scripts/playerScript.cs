@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum Items { Key1, Key2, Key3, Lever, Cog, Crystal, Candle}
+
 public class playerScript : MonoBehaviour
 {
     Animator anim;
@@ -11,7 +13,9 @@ public class playerScript : MonoBehaviour
     CapsuleCollider cap;
     public GameObject cameraObject, cameraSorter;
     public float camSpeed;
-    public KeyCode forward, backward, left, right, jump, crouch, altCrouch, interact;
+    [Header ("Controls")]
+    public KeyCode forward;
+    public KeyCode backward, left, right, jump, crouch, altCrouch, interact;
     public float jumpForce;
     float movementSpeed;
     public float runSpeed, crouchSpeed;
@@ -31,6 +35,7 @@ public class playerScript : MonoBehaviour
     public bool leaveCorpses;
     [Header("Inventory Booleans")]
     public bool hasCog;
+    [Space]
     public bool hasCrystal, hasLever, hasKey1, hasKey2, hasKey3, hasCandle;
     invScript currentItem;
 
@@ -225,9 +230,38 @@ public class playerScript : MonoBehaviour
             if (Input.GetKeyDown(interact))
             {
                 currentItem = other.GetComponent<invScript>();
+                doStuff(currentItem.boolToChange);
                 currentItem.switchSprite();
                 Destroy(other.gameObject);
             }
+        }
+    }
+
+    void doStuff(Items itemName)
+    {
+        switch (itemName)
+        {
+            case Items.Key1:
+                hasKey1 = true;
+                break;
+            case Items.Key2:
+                hasKey2 = true;
+                break;
+            case Items.Key3:
+                hasKey3 = true;
+                break;
+            case Items.Lever:
+                hasLever = true;
+                break;
+            case Items.Cog:
+                hasCog = true;
+                break;
+            case Items.Crystal:
+                hasCrystal = true;
+                break;
+            case Items.Candle:
+                hasCandle = true;
+                break;
         }
     }
 

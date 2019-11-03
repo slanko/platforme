@@ -8,7 +8,7 @@ public class invScript : MonoBehaviour
     public Sprite switchTo;
     public Image spr;
     UIscript uS;
-
+    public Items boolToChange;
     private void Start()
     {
         uS = GameObject.Find("Canvas/God Jesus").GetComponent<UIscript>();
