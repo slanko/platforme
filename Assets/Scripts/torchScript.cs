@@ -10,7 +10,7 @@ public class torchScript : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        partSys = GameObject.Find(transform.name + "/Particle System").GetComponent<ParticleSystem>();
+        partSys = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnTriggerEnter(Collider other)
