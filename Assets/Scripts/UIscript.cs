@@ -9,6 +9,7 @@ public class UIscript : MonoBehaviour
     Animator optionsAnim, invAnim;
     public KeyCode options, inventory;
     Toggle moveToggle, corpseToggle;
+    public bool crystalDone, cogDone, leverDone;
 
     playerScript pS;
     // Start is called before the first frame update
@@ -72,6 +73,19 @@ public class UIscript : MonoBehaviour
         {
             pS.movementSmooth = true;
         }
+    }
+
+    public void toggleTimer()
+    {
+        if(pS.timeDisplay.gameObject.activeSelf == true)
+        {
+            pS.timeDisplay.gameObject.SetActive(false);
+        }
+        else
+        {
+            pS.timeDisplay.gameObject.SetActive(true);
+        }
+
     }
 
     void resetInv()

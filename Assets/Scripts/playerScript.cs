@@ -38,6 +38,13 @@ public class playerScript : MonoBehaviour
     [Space]
     public bool hasCrystal, hasLever, hasKey1, hasKey2, hasKey3, hasCandle;
     invScript currentItem;
+    [Header("Audio")]
+    public AudioSource aud;
+    public AudioClip[] footSteps, crouchFootSteps;
+    [Header("Dialogue")]
+    public GameObject textCanvas;
+    public GameObject billboardCamera;
+    public Text dialogueText;
 
     //TIME STUFF
     public float timer;
@@ -47,6 +54,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        aud = GetComponent<AudioSource>();
         cap = GetComponent<CapsuleCollider>();
         wantedDirection = transform.rotation;
         rb = GetComponent<Rigidbody>();
@@ -55,6 +63,7 @@ public class playerScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         timer = 0;
         finished = false;
+        dialogueText.text = "";
     }
 
     private void Update()
@@ -64,7 +73,7 @@ public class playerScript : MonoBehaviour
             timer = timer + Time.deltaTime;
             timeDisplay.text = "time: " + timer.ToString("F2");
         }
-
+        textCanvas.transform.LookAt(billboardCamera.transform.position);
     }
 
 
