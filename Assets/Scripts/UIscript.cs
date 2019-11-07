@@ -10,6 +10,7 @@ public class UIscript : MonoBehaviour
     public KeyCode options, inventory;
     Toggle moveToggle, corpseToggle;
     public bool crystalDone, cogDone, leverDone;
+    public Material lightMat;
 
     playerScript pS;
     // Start is called before the first frame update

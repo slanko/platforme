@@ -210,4 +210,5 @@ MonoBehaviour:
   myCam: {fileID: 8056097744939420473}
   camZ: {x: 0, y: 0, z: 0}
   lerpSpeed: 6
-  camSensitivity: 2
+  camXSensitivity: 3
+  camYSensitivity: 3
