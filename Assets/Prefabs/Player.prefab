@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 4070283587029097296}
   - component: {fileID: 946391657498711970}
   - component: {fileID: 2256528674463397438}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: PlayerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ RectTransform:
   m_GameObject: {fileID: 773915679838573206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.0007107415, y: 0.00071074156, z: 0.00071074156}
+  m_LocalScale: {x: -0.00041144824, y: 0.00041144827, z: 0.00041144827}
   m_Children: []
   m_Father: {fileID: 8003620382118984580}
   m_RootOrder: 0
@@ -199,7 +199,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5487.895, y: 568.096}
+  m_SizeDelta: {x: 4680.554, y: 1088.6716}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &946391657498711970
 CanvasRenderer:
@@ -242,7 +242,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: hee hee hoo hoo
+  m_Text: god FUCKING damn i love fortnite
 --- !u!1 &3973040870285325794
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +714,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 69f4cc749a8eed2458cdf33dbc1fb3b7, type: 3}
   - {fileID: 8300000, guid: 3d346ef365062554eb42e58e500cd615, type: 3}
   crouchFootSteps: []
+  textCanvas: {fileID: 8692653153101337909}
+  billboardCamera: {fileID: 0}
+  dialogueText: {fileID: 2256528674463397438}
   timer: 0
   timeDisplay: {fileID: 0}
 --- !u!82 &1142206283
@@ -1076,7 +1079,7 @@ GameObject:
   - component: {fileID: 5586419782692071113}
   - component: {fileID: 4785298444269605702}
   - component: {fileID: 2345861184492254119}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
